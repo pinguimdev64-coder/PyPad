@@ -1,9 +1,16 @@
+import sys, os
+
+## NOTE: Parte para não dar erro
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+
 import readchar, os, shutil
 from readchar import key
 
 os.system("clear")
 
-def cur(linha, coluna):
+def cur(linha, coluna): #NOTE: Mudar local do cursor
     # O terminal começa em 1, então somamos 1 aos nossos índices base-0
     print(f"\033[{linha + 1};{coluna + 1}H", end="", flush=True)
 
@@ -28,7 +35,7 @@ def main():
         Se a linha de cima estiver vazia, puxa tudo que está abaixo uma posição para cima."""
         nonlocal linha, linhas, coluna, linha_livre
         
-        if not len(linhas[linha + 1]) < 1: # FIXME:
+        if not len(linhas[linha + 1]) < 1: 
 
             # Linha de cima vazia: puxa tudo uma posição para cima
             for i in range(linha, linha_livre):
