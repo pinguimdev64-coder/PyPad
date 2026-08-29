@@ -1,0 +1,40 @@
+name: Build Windows Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-size: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install pyinstaller
+          pip install readchar --target pypad/
+
+      - name: Build EXE
+        run: |
+          pyinstaller --onefile --console --name pypad pypad/main.py
+
+      - name: Create ZIP Package
+        shell: bash
+        run: |
+          mkdir pypad-windows
+          cp dist/pypad.exe pypad-windows/
+          cp README.md pypad-windows/
+          cp LICENSE pypad-windows/
+          echo "Basta dar dois cliques no pypad.exe para rodar!" > pypad-windows/INSTRUCOES.txt
+          tar -a -c -f pypad-windows.zip pypad-windows
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: pypad-windows.zip
