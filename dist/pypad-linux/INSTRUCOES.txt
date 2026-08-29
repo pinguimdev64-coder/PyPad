@@ -1,0 +1,5 @@
+Como rodar o PyPad no Linux:
+
+1. Abra o terminal na pasta onde o arquivo 'pypad' está localizado.
+2. Dê permissão de execução (se necessário): chmod +x pypad
+3. Execute o programa: ./pypad
