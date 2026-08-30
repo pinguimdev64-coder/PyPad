@@ -10,20 +10,31 @@ from readchar import key
 
 os.system("clear")
 def color_load():
-    caminho_config = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
+    # Detecta se está rodando como binário (PyInstaller) ou script normal
+    if getattr(sys, 'frozen', False):
+        # Caminho da pasta onde o executável foi guardado/executado pelo usuário
+        diretorio_atual = os.path.dirname(sys.executable)
+    else:
+        # Caminho tradicional para quando roda o script direto pelo VS Code
+        diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+
+    # Define o caminho final do config.json na pasta correta
+    caminho_config = os.path.join(diretorio_atual, "config.json")
+    
     conf_default = {
-        "text_status":"#0F0F1A",
-        "text_editor":"#ffffff",
-        "global_color":"#ff5555",
+        "text_status": "#0F0F1A",
+        "text_editor": "#ffffff",
+        "global_color": "#ff5555",
     }
+    
     if not os.path.exists(caminho_config):
         with open(caminho_config, 'w', encoding='utf-8') as f:
             json.dump(conf_default, f, indent=4, ensure_ascii=False)
-            return conf_default
+        return conf_default
     else:
         with open(caminho_config, 'r', encoding='utf-8') as f:
             conf = json.load(f)
-            return conf 
+        return conf 
 
 def cur(linha, coluna): #NOTE: Mudar local do cursor
     # O terminal começa em 1, então somamos 1 aos nossos índices base-0
