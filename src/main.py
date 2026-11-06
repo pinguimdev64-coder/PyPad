@@ -1,3 +1,4 @@
+# Copyright © 2026 PinguimDev64-coder. Todos os direitos resevardos.
 import sys, os
 
 ## NOTE: Parte para não dar erro
